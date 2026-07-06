@@ -29,14 +29,23 @@
   robots, embodied AI, funding rounds and the research behind them —
   all the day's robot news, distilled into one email, every weekday morning.</p>
 
-  <!-- Замените robotelegraph на ваш username в Buttondown -->
-  <form action="https://buttondown.com/api/emails/embed-subscribe/robotelegraph"
-        method="post" target="popupwindow"
-        onsubmit="window.open('https://buttondown.com/robotelegraph', 'popupwindow')">
+  <form id="sub" action="https://buttondown.com/api/emails/embed-subscribe/robotelegraph"
+        method="post">
     <input type="email" name="email" placeholder="you@example.com" required>
     <button type="submit">SUBSCRIBE</button>
   </form>
-  <p class="fine">FREE · UNSUBSCRIBE ANYTIME</p>
+  <p class="fine" id="sub-note">FREE · UNSUBSCRIBE ANYTIME</p>
+  <script>
+    document.getElementById('sub').addEventListener('submit', function (e) {
+      e.preventDefault();
+      fetch(this.action, { method: 'POST', mode: 'no-cors', body: new FormData(this) });
+      var p = document.createElement('p');
+      p.style.cssText = 'font-size:17px;line-height:1.75;margin:56px 0 12px;';
+      p.textContent = 'Check your inbox — we sent you a confirmation link.';
+      this.replaceWith(p);
+      document.getElementById('sub-note').textContent = 'NO CONFIRMATION EMAIL? CHECK SPAM OR TRY AGAIN.';
+    });
+  </script>
 
   <footer><a href="https://buttondown.com/robotelegraph/archive">Archive</a></footer>
 </div>
